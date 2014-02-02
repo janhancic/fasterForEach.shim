@@ -2,6 +2,8 @@
 Array.prototype.forEach.__itemProcessorMatcher = '';
 
 Array.prototype.forEach = function(itemProcessor, context) {
+	context = context || null;
+
 	var itemProcessorSource = itemProcessor.toString(),
 		loopHeader;
 
@@ -23,6 +25,6 @@ Array.prototype.forEach = function(itemProcessor, context) {
 	// console.log(context);
 
 	// eval(itemProcessorSource);
-	(new Function('__i__', '__len__', '__array__', itemProcessorSource))(0, this.length, this);
+	(new Function('__i__', '__len__', '__array__', itemProcessorSource)).call(context, 0, this.length, this);
 };
 // }

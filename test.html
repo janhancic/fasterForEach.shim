@@ -12,7 +12,8 @@ var items = [1, 2, 3, 4, 5];
 items.forEach(function(item, idx, array) {
 	console.log(item, idx, array);
 	console.log(item * idx);
-});
+	console.log(this.a);
+}, {a: '123'});
 
 </script>
 
