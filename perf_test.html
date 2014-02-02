@@ -6,17 +6,29 @@
 	<body>
 
 <script type="text/javascript">
+
+if (!console.time) {
+	var startTime, endTime;
+	console.time = function(str) {
+		startTime = (new Date()).getTime();
+	};
+
+	console.timeEnd = function(str) {
+		console.log(str, ' ', (new Date()).getTime() - startTime);
+	};
+}
+
 var items = [];
-for (var i = 0; i < 100000; i++) {
+for (var i = 0; i < 10; i++) {
 	items.push(i);
 }
 
-console.time('native');
-items.forEach(function(item, idx, array) {
-	var bla = item * 2;
-	// console.log(bla);
-});
-console.timeEnd('native');
+// console.time('native');
+// items.forEach(function(item, idx, array) {
+// 	var bla = item * 2;
+// 	// console.log(bla);
+// });
+// console.timeEnd('native');
 
 </script>
 
@@ -24,10 +36,7 @@ console.timeEnd('native');
 
 <script type="text/javascript">
 console.time('fasterForEach');
-items.forEach(function(item, idx, array) {
-	var bla = item * 2;
-	// console.log(bla);
-});
+items.forEach(function ( item,  idx,  array   )    {var bla = item * 2;console.log(bla);});
 console.timeEnd('fasterForEach');
 </script>
 
@@ -42,10 +51,10 @@ var boxedString = Object("a");
 var splitString = boxedString[0] != "a" || !(0 in boxedString);
 var call = Function.prototype.call;
 var prototypeOfObject = Object.prototype;
-var _toString = call.bind(prototypeOfObject.toString);
+// var _toString = call.bind(prototypeOfObject.toString);
 Array.prototype.forEach = function forEach(fun /*, thisp*/) {
     var object = toObject(this),
-        self = splitString && _toString(this) == "[object String]" ?
+        self = splitString && this.toString() == "[object String]" ?
             this.split("") :
             object,
         thisp = arguments[1],
@@ -53,8 +62,8 @@ Array.prototype.forEach = function forEach(fun /*, thisp*/) {
         length = self.length >>> 0;
 
     // If no callback function or if callback is not a callable function
-    if (_toString(fun) != "[object Function]") {
-        throw new TypeError(); // TODO message
+    if (fun.toString() != "[object Function]") {
+        // throw new TypeError(); // TODO message
     }
 
     while (++i < length) {

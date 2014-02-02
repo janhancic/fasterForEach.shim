@@ -1,29 +1,40 @@
 // ;if (...) {
-Array.prototype.forEach.__itemProcessorMatcher = '';
-
 Array.prototype.forEach = function(itemProcessor, context) {
 	context = context || null;
 
 	var itemProcessorSource = itemProcessor.toString(),
-		loopHeader;
+		loopHeader = '',
+		innerLoop = '',
+		argumentNames;
+
+	argumentNames = itemProcessorSource.slice(itemProcessorSource.indexOf('(') + 1, itemProcessorSource.indexOf(')'));
+	argumentNames = argumentNames.match(Array.prototype.forEach.__fasterForEachItemProcessorMatcher__);
 
 	// TODO:
-	// - parse out the itemProcessor argument names, right now it's all hardcoded
 	// - only add forEach if it isn't already present (duh)
 
-	loopHeader = 'var item, idx, array;\n' +
-				'for ( ; __i__ < __len__; __i__++) {\n' +
+	if (argumentNames[0]) {
+		loopHeader = 'var ' + argumentNames[0] + ';\n';
+		innerLoop = '\t' + argumentNames[0] + ' = __array__[__i__];\n';
+	}
+
+	if (argumentNames[1]) {
+		loopHeader += 'var ' + argumentNames[1] + ';\n';
+		innerLoop += '\t' + argumentNames[1] + ' = __i__;\n';
+	}
+
+	if (argumentNames[2]) {
+		loopHeader += 'var ' + argumentNames[2] + ' = __array__;\n';
+	}
+
+	loopHeader += 'for ( ; __i__ < __len__; __i__++) {\n' +
 					'\tif (!(__i__ in __array__)) { continue; }\n' +
-					'\titem = __array__[__i__];\n' +
-					'\tidx = __i__;\n' +
-					'\tarray = __array__;\n';
+					innerLoop;
 
-	itemProcessorSource = itemProcessorSource.replace('function (item, idx, array) {', loopHeader);
+	itemProcessorSource = loopHeader + '\n' + itemProcessorSource.substr(itemProcessorSource.indexOf('{') + 1);
 
-	// console.log(itemProcessorSource);
-	// console.log(context);
-
-	// eval(itemProcessorSource);
 	(new Function('__i__', '__len__', '__array__', itemProcessorSource)).call(context, 0, this.length, this);
 };
+
+Array.prototype.forEach.__fasterForEachItemProcessorMatcher__ = new RegExp('([^\s,]+)', 'g');
 // }
