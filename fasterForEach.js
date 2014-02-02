@@ -9,7 +9,6 @@ Array.prototype.forEach = function(itemProcessor, context) {
 
 	// TODO:
 	// - parse out the itemProcessor argument names, right now it's all hardcoded
-	// - add support for the context argument
 	// - only add forEach if it isn't already present (duh)
 
 	loopHeader = 'var item, idx, array;\n' +
