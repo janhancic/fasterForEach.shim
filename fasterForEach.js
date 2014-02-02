@@ -9,17 +9,18 @@ Array.prototype.forEach = function(itemProcessor, context) {
 
 	loopHeader = 'var item, idx, array;\n' +
 				// 'var $__i = 0, $__len = this.length;\n' +
-				'for (var $__i = 0, $__len = this.length; $__i < $__len; $__i++) {\n' +
+				'for (var $__i = 0, $__len = $__array.length; $__i < $__len; $__i++) {\n' +
 				// 'while (++$__i < $__len) {\n' +
-					'\tif (!($__i in this)) { continue; }\n' +
-					'\titem = this[$__i];\n' +
+					'\tif (!($__i in $__array)) { continue; }\n' +
+					'\titem = $__array[$__i];\n' +
 					'\tidx = $__i;\n' +
-					'\tarray = this;\n';
+					'\tarray = $__array;\n';
 
 	itemProcessorSource = itemProcessorSource.replace('function (item, idx, array) {', loopHeader);
 
 	// console.log(itemProcessorSource);
 	// console.log(context);
 
-	eval(itemProcessorSource);
+	// eval(itemProcessorSource);
+	(new Function('$__array', itemProcessorSource))(this);
 };

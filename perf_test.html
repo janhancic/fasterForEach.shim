@@ -13,7 +13,8 @@ for (var i = 0; i < 100000; i++) {
 
 console.time('native');
 items.forEach(function(item, idx, array) {
-	
+	var bla = item * 2;
+	// console.log(bla);
 });
 console.timeEnd('native');
 
@@ -24,7 +25,8 @@ console.timeEnd('native');
 <script type="text/javascript">
 console.time('fasterForEach');
 items.forEach(function(item, idx, array) {
-	
+	var bla = item * 2;
+	// console.log(bla);
 });
 console.timeEnd('fasterForEach');
 </script>
@@ -67,7 +69,8 @@ Array.prototype.forEach = function forEach(fun /*, thisp*/) {
 
 console.time('ES5');
 items.forEach(function(item, idx, array) {
-	
+	var bla = item * 2;
+	// console.log(bla);
 });
 console.timeEnd('ES5');
 
