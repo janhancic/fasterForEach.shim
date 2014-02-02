@@ -19,16 +19,16 @@ if (!console.time) {
 }
 
 var items = [];
-for (var i = 0; i < 10; i++) {
+for (var i = 0; i < 100000; i++) {
 	items.push(i);
 }
 
-// console.time('native');
-// items.forEach(function(item, idx, array) {
-// 	var bla = item * 2;
-// 	// console.log(bla);
-// });
-// console.timeEnd('native');
+console.time('native');
+items.forEach(function(item, idx, array) {
+	var bla = item * 2;
+	// console.log(bla);
+});
+console.timeEnd('native');
 
 </script>
 
@@ -36,7 +36,10 @@ for (var i = 0; i < 10; i++) {
 
 <script type="text/javascript">
 console.time('fasterForEach');
-items.forEach(function ( item,  idx,  array   )    {var bla = item * 2;console.log(bla);});
+items.forEach(function ( item,  idx,  array   )    {
+	var bla = item * 2;
+	// console.log(bla);
+});
 console.timeEnd('fasterForEach');
 </script>
 
