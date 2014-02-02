@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>fasterForEach test</title>
+	</head>
+	<body>
+
+<script type="text/javascript">
+var items = [];
+for (var i = 0; i < 100000; i++) {
+	items.push(i);
+}
+
+console.time('native');
+items.forEach(function(item, idx, array) {
+	
+});
+console.timeEnd('native');
+
+</script>
+
+	<script type="text/javascript" src="fasterForEach.js"></script>
+
+<script type="text/javascript">
+console.time('fasterForEach');
+items.forEach(function(item, idx, array) {
+	
+});
+console.timeEnd('fasterForEach');
+</script>
+
+<script type="text/javascript">
+var toObject = function (o) {
+    if (o == null) { // this matches both null and undefined
+        throw new TypeError("can't convert "+o+" to object");
+    }
+    return Object(o);
+};
+var boxedString = Object("a");
+var splitString = boxedString[0] != "a" || !(0 in boxedString);
+var call = Function.prototype.call;
+var prototypeOfObject = Object.prototype;
+var _toString = call.bind(prototypeOfObject.toString);
+Array.prototype.forEach = function forEach(fun /*, thisp*/) {
+    var object = toObject(this),
+        self = splitString && _toString(this) == "[object String]" ?
+            this.split("") :
+            object,
+        thisp = arguments[1],
+        i = -1,
+        length = self.length >>> 0;
+
+    // If no callback function or if callback is not a callable function
+    if (_toString(fun) != "[object Function]") {
+        throw new TypeError(); // TODO message
+    }
+
+    while (++i < length) {
+        if (i in self) {
+            // Invoke the callback function with call, passing arguments:
+            // context, property value, property key, thisArg object
+            // context
+            fun.call(thisp, self[i], i, object);
+        }
+    }
+};
+
+console.time('ES5');
+items.forEach(function(item, idx, array) {
+	
+});
+console.timeEnd('ES5');
+
+</script>
+
+	</body>
+</html>

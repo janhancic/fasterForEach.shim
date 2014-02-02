@@ -7,17 +7,19 @@ Array.prototype.forEach = function(itemProcessor, context) {
 	// - add support for the context argument
 	// only add forEach if it isn't already present (duh)
 
-	loopHeader = 'var item;\n' +
+	loopHeader = 'var item, idx, array;\n' +
+				// 'var $__i = 0, $__len = this.length;\n' +
 				'for (var $__i = 0, $__len = this.length; $__i < $__len; $__i++) {\n' +
-					'\tif (!($__i in this)) { continue; }\n'
+				// 'while (++$__i < $__len) {\n' +
+					'\tif (!($__i in this)) { continue; }\n' +
 					'\titem = this[$__i];\n' +
 					'\tidx = $__i;\n' +
 					'\tarray = this;\n';
 
 	itemProcessorSource = itemProcessorSource.replace('function (item, idx, array) {', loopHeader);
 
-	console.log(itemProcessorSource);
-	console.log(context);
+	// console.log(itemProcessorSource);
+	// console.log(context);
 
 	eval(itemProcessorSource);
 };
