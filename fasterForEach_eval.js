@@ -31,7 +31,8 @@ Array.prototype.forEach = function(itemProcessor, context) {
 
 	itemProcessorSource = loopHeader + itemProcessorSource.substr(itemProcessorSource.indexOf('{') + 1);
 
-	(new Function('__i__', '__len__', '__array__', itemProcessorSource)).call(context, 0, this.length, this);
+	eval('var tmpFnc = function (__i__, __len__, __array__) {' + itemProcessorSource + '};');
+	tmpFnc.call(context, 0, this.length, this);
 };
 
 Array.prototype.forEach.__fasterForEachItemProcessorMatcher__ = new RegExp('([^\s,]+)', 'g');
