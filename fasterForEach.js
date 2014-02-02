@@ -8,9 +8,9 @@ Array.prototype.forEach = function(itemProcessor, context) {
 	// only add forEach if it isn't already present (duh)
 
 	loopHeader = 'var item;\n' +
-				'for (var \$__i = 0, \$__len = this.length; \$__i < \$__len; \$__i++) {\n' +
-					'\tif (typeof this[\$__i] === "undefined") { continue; }\n' +
-					'\titem = this[\$__i];\n' +
+				'for (var $__i = 0, $__len = this.length; $__i < $__len; $__i++) {\n' +
+					'\tif (typeof this[$__i] === "undefined") { continue; }\n' +
+					'\titem = this[$__i];\n' +
 					'\tidx = $__i;\n' +
 					'\tarray = this;\n';
 
