@@ -9,8 +9,9 @@
 <script type="text/javascript">
 var items = [1, 2, 3, 4, 5];
 
-items.forEach(function(item) {
-	console.log(item);
+items.forEach(function(item, idx, array) {
+	console.log(item, idx, array);
+	console.log(item * idx);
 });
 
 </script>
