@@ -19,7 +19,7 @@ if (!console.time) {
 }
 
 var items = [];
-for (var i = 0; i < 100000; i++) {
+for (var i = 0; i < 1000000; i++) {
 	items.push(i);
 }
 
@@ -36,11 +36,20 @@ console.timeEnd('native');
 
 <script type="text/javascript">
 console.time('fasterForEach');
-items.forEach(function ( item,  idx,  array   )    {
+items.fasterForEach(function ( item,  idx,  array   )    {
 	var bla = item * 2;
 	// console.log(bla);
 });
 console.timeEnd('fasterForEach');
+</script>
+
+<script type="text/javascript">
+console.time('fasterForEachEval');
+items.fasterForEachEval(function ( item,  idx,  array   )    {
+    var bla = item * 2;
+    // console.log(bla);
+});
+console.timeEnd('fasterForEachEval');
 </script>
 
 <script type="text/javascript">
