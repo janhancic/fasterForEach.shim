@@ -36,7 +36,7 @@ console.timeEnd('native');
 
 <script type="text/javascript">
 console.time('fasterForEach');
-items.fasterForEach(function ( item,  idx,  array   )    {
+items.fasterForEach(function(item, idx, array) {
 	var bla = item * 2;
 	// console.log(bla);
 });
@@ -45,9 +45,9 @@ console.timeEnd('fasterForEach');
 
 <script type="text/javascript">
 console.time('fasterForEachEval');
-items.fasterForEachEval(function ( item,  idx,  array   )    {
-    var bla = item * 2;
-    // console.log(bla);
+items.fasterForEachEval(function(item,idx, array) {
+	var bla = item * 2;
+	// console.log(bla);
 });
 console.timeEnd('fasterForEachEval');
 </script>
